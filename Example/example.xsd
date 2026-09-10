@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic example web-service schema, modelled on the structure of a typical
+     Slovak public-administration query-by-identifier web service. Fictional
+     registry and namespace — not derived from, or a copy of, any real
+     government-registry schema. Used only as a worked example for the
+     XML -> RDF (XSLT) -> JSON-LD pipeline in this repo. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           targetNamespace="http://example.org/example/PersonAddressWS-v1.0.xsd"
+           xmlns:msg="http://example.org/example/PersonAddressWS-v1.0.xsd"
+           xmlns:owl="http://www.w3.org/2002/07/owl#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+           xmlns:tmid="http://schemas.gov.sk/transform-modul/referencing">
+
+    <xs:import namespace="http://schemas.gov.sk/transform-modul/referencing" schemaLocation="referencing.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>Provides a person's personal and address data based on a person identifier (synthetic example).</xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="TransEnvIn" type="msg:TransEnvInCType">
+        <xs:annotation>
+            <xs:documentation>Input XML.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TransEnvOut" type="msg:TransEnvOutCType">
+        <xs:annotation>
+            <xs:documentation>Output XML.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="TransEnvInCType">
+        <xs:annotation>
+            <xs:documentation>Input XML.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ExternalSystemTransactionId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Identifier of the transaction in the external system that initiated the relevant transaction.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ExternalUser" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>User of the external system who sent the request.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PersonIdentifier" type="xs:string" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Identifier of the person for whom the request is being made.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="CorrID" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Unique identifier of the transaction on the provider system.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TransEnvOutCType">
+        <xs:annotation>
+            <xs:documentation>Output XML.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="OutputCreatedDateTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Date and time the output was created.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ReturnCode" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>Return code of the web service.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Person" type="msg:PersonCType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The person's personal and address data.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="Person">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/physicalPerson"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="CorrID" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="PersonCType">
+        <xs:annotation>
+            <xs:documentation>Personal and address data of a natural person.</xs:documentation>
+            <xs:appinfo>
+                <owl:Class ID="PersonCType">
+                    <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/PhysicalPerson"/>
+                </owl:Class>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Identifier" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Unique identifier of the person in this system (not a birth number).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="GivenName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Given name of the person.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="GivenName">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/givenName"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FamilyName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Family name of the person.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="FamilyName">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/familyName"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DateOfBirth" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Date of birth of the person.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="DateOfBirth">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/dateOfBirth"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Address" type="msg:AddressCType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The person's residential address.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="Address">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/permanentResidence"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AddressCType">
+        <xs:annotation>
+            <xs:documentation>Postal address.</xs:documentation>
+            <xs:appinfo>
+                <owl:Class ID="AddressCType">
+                    <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/PhysicalAddress"/>
+                </owl:Class>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Street" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Name of the street.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="Street">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/street"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BuildingNumber" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Orientation / building number.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Municipality" type="msg:CodelistRefCType">
+                <xs:annotation>
+                    <xs:documentation>Municipality of the address, resolved against the register of municipalities (MetaIS codelist CL000025).</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="Municipality">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/lau2"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PostalCode" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Postal code.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Country" type="msg:CodelistRefCType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Country of the address, resolved against the UN country codelist (MetaIS codelist CL000086).</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="Country">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/unCountry"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CodelistRefCType">
+        <xs:annotation>
+            <xs:documentation>A field value resolved to a national codelist item by the transformation module's identification step; see tmid:Codelist in referencing.xsd.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="tmid:Codelist"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

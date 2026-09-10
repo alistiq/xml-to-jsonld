@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic schema for the shared "transformation module" codelist-referencing
+     structure (tmid:) used by the data-integration identification step to attach
+     a resolved national/ministry codelist item (per MetaIS) to a source field.
+     Modelled on the structure used across Slovak public-administration
+     registry-to-RDF pipelines to satisfy the base-codelist / referencovateľné
+     údaje requirements of Vyhláška 78/2020 (ITVS) §51. Fictional namespace —
+     not a copy of any real government schema. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="qualified"
+           targetNamespace="http://schemas.gov.sk/transform-modul/referencing"
+           xmlns:tmid="http://schemas.gov.sk/transform-modul/referencing">
+
+    <xs:annotation>
+        <xs:documentation>Reusable codelist-reference structure: wraps a source field's resolved value with the MetaIS codelist it was matched against, and the matched item's code and bilingual (sk/en) name.</xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="Codelist" type="tmid:CodelistCType">
+        <xs:annotation>
+            <xs:documentation>A field value resolved to one item of a national or ministry codelist.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CodelistCType">
+        <xs:sequence>
+            <xs:element name="CodelistCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Identifier of the codelist in MetaIS, format CLNNNNNN (e.g. "CL000086").</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CodelistItem" type="tmid:CodelistItemCType">
+                <xs:annotation>
+                    <xs:documentation>The matched codelist item.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CodelistValue" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Raw source-system value, retained when it could not be resolved to a codelist item.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="type" use="optional">
+            <xs:annotation>
+                <xs:documentation>Kind of codelist reference. "ZC" = základný číselník (unified base codelist per Vyhláška 78/2020 §51).</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ZC"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="CodelistItemCType">
+        <xs:sequence>
+            <xs:element name="ItemCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Canonical code of the item within the codelist (e.g. the UN M49 numeric country code, or a municipality's LAU2 code).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ItemName" type="tmid:ItemNameCType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Display name of the item, one per language (sk, en).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ItemNameCType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="xs:language" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Language of this name, e.g. "sk" or "en".</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

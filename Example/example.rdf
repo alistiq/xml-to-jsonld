@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:adms="http://www.w3.org/ns/adms#"
+         xmlns:loca="https://data.gov.sk/def/ontology/location/"
+         xmlns:pper="https://data.gov.sk/def/ontology/physical-person/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+   <pper:PhysicalPerson>
+      <adms:identifier>
+         <adms:Identifier>
+            <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EXAMPLE-0001</skos:notation>
+         </adms:Identifier>
+      </adms:identifier>
+      <pper:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">John</pper:givenName>
+      <pper:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sample</pper:familyName>
+      <pper:dateOfBirth rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1990-05-12</pper:dateOfBirth>
+      <pper:permanentResidence>
+         <pper:PermanentResidence>
+            <loca:physicalAddress>
+               <loca:PhysicalAddress>
+                  <loca:street>
+                     <loca:Street>
+                        <skos:prefLabel xml:lang="en">Sample Street</skos:prefLabel>
+                     </loca:Street>
+                  </loca:street>
+                  <loca:orientationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12</loca:orientationNumber>
+                  <loca:postCode>
+                     <loca:PostCode>
+                        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">81102</skos:notation>
+                     </loca:PostCode>
+                  </loca:postCode>
+                  <loca:lau2>
+                     <loca:LAU2 rdf:about="https://data.gov.sk/def/lau2/SK0101528595">
+                        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SK0101528595</skos:notation>
+                        <skos:inScheme rdf:resource="https://data.gov.sk/set/codelist/CL000025"/>
+                        <skos:prefLabel xml:lang="sk">Bratislava - mestská časť Staré Mesto</skos:prefLabel>
+                        <skos:prefLabel xml:lang="en">Bratislava - Staré Mesto</skos:prefLabel>
+                     </loca:LAU2>
+                  </loca:lau2>
+                  <loca:unCountry>
+                     <loca:UNCountry rdf:about="https://data.gov.sk/def/uncountry/703">
+                        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">703</skos:notation>
+                        <skos:inScheme rdf:resource="https://data.gov.sk/set/codelist/CL000086"/>
+                        <skos:prefLabel xml:lang="sk">Slovenská republika</skos:prefLabel>
+                        <skos:prefLabel xml:lang="en">Slovak Republic</skos:prefLabel>
+                     </loca:UNCountry>
+                  </loca:unCountry>
+               </loca:PhysicalAddress>
+            </loca:physicalAddress>
+         </pper:PermanentResidence>
+      </pper:permanentResidence>
+   </pper:PhysicalPerson>
+</rdf:RDF>

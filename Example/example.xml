@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic sample instance of example.xsd. All data is fictional. -->
+<msg:TransEnvOut xmlns:msg="http://example.org/example/PersonAddressWS-v1.0.xsd"
+                  xmlns="http://example.org/example/PersonAddressWS-v1.0.xsd"
+                  xmlns:tmid="http://schemas.gov.sk/transform-modul/referencing"
+                  CorrID="c2f2b6d1-6b0d-4b8e-8a63-2f2a0b6a9b11">
+    <OutputCreatedDateTime>2026-09-14T09:00:00</OutputCreatedDateTime>
+    <ReturnCode>0</ReturnCode>
+    <Person>
+        <Identifier>EXAMPLE-0001</Identifier>
+        <GivenName>John</GivenName>
+        <FamilyName>Sample</FamilyName>
+        <DateOfBirth>1990-05-12</DateOfBirth>
+        <Address>
+            <Street>Sample Street</Street>
+            <BuildingNumber>12</BuildingNumber>
+            <Municipality>
+                <tmid:Codelist tmid:type="ZC">
+                    <tmid:CodelistCode>CL000025</tmid:CodelistCode>
+                    <tmid:CodelistItem>
+                        <tmid:ItemCode>SK0101528595</tmid:ItemCode>
+                        <tmid:ItemName tmid:lang="sk">Bratislava - mestská časť Staré Mesto</tmid:ItemName>
+                        <tmid:ItemName tmid:lang="en">Bratislava - Staré Mesto</tmid:ItemName>
+                    </tmid:CodelistItem>
+                </tmid:Codelist>
+            </Municipality>
+            <PostalCode>81102</PostalCode>
+            <Country>
+                <tmid:Codelist tmid:type="ZC">
+                    <tmid:CodelistCode>CL000086</tmid:CodelistCode>
+                    <tmid:CodelistItem>
+                        <tmid:ItemCode>703</tmid:ItemCode>
+                        <tmid:ItemName tmid:lang="sk">Slovenská republika</tmid:ItemName>
+                        <tmid:ItemName tmid:lang="en">Slovak Republic</tmid:ItemName>
+                    </tmid:CodelistItem>
+                </tmid:Codelist>
+            </Country>
+        </Address>
+    </Person>
+</msg:TransEnvOut>

@@ -1,0 +1,105 @@
+{
+  "@context": {
+    "adms": "http://www.w3.org/ns/adms#",
+    "loca": "https://data.gov.sk/def/ontology/location/",
+    "pper": "https://data.gov.sk/def/ontology/physical-person/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@type": "pper:PhysicalPerson",
+      "adms:identifier": {
+        "@type": "adms:Identifier",
+        "skos:notation": {
+          "@value": "EXAMPLE-0001",
+          "@type": "xsd:string"
+        }
+      },
+      "pper:givenName": {
+        "@value": "John",
+        "@type": "xsd:string"
+      },
+      "pper:familyName": {
+        "@value": "Sample",
+        "@type": "xsd:string"
+      },
+      "pper:dateOfBirth": {
+        "@value": "1990-05-12",
+        "@type": "xsd:date"
+      },
+      "pper:permanentResidence": {
+        "@type": "pper:PermanentResidence",
+        "loca:physicalAddress": {
+          "@type": "loca:PhysicalAddress",
+          "loca:street": {
+            "@type": "loca:Street",
+            "skos:prefLabel": {
+              "@value": "Sample Street",
+              "@language": "en"
+            }
+          },
+          "loca:orientationNumber": {
+            "@value": "12",
+            "@type": "xsd:string"
+          },
+          "loca:postCode": {
+            "@type": "loca:PostCode",
+            "skos:notation": {
+              "@value": "81102",
+              "@type": "xsd:string"
+            }
+          },
+          "loca:lau2": {
+            "@id": "https://data.gov.sk/def/lau2/SK0101528595"
+          },
+          "loca:unCountry": {
+            "@id": "https://data.gov.sk/def/uncountry/703"
+          }
+        }
+      }
+    },
+    {
+      "@type": "loca:LAU2",
+      "@id": "https://data.gov.sk/def/lau2/SK0101528595",
+      "skos:notation": {
+        "@value": "SK0101528595",
+        "@type": "xsd:string"
+      },
+      "skos:inScheme": {
+        "@id": "https://data.gov.sk/set/codelist/CL000025"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bratislava - mestská časť Staré Mesto",
+          "@language": "sk"
+        },
+        {
+          "@value": "Bratislava - Staré Mesto",
+          "@language": "en"
+        }
+      ]
+    },
+    {
+      "@type": "loca:UNCountry",
+      "@id": "https://data.gov.sk/def/uncountry/703",
+      "skos:notation": {
+        "@value": "703",
+        "@type": "xsd:string"
+      },
+      "skos:inScheme": {
+        "@id": "https://data.gov.sk/set/codelist/CL000086"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Slovenská republika",
+          "@language": "sk"
+        },
+        {
+          "@value": "Slovak Republic",
+          "@language": "en"
+        }
+      ]
+    }
+  ]
+}
